@@ -1,3 +1,26 @@
+import { useMachine } from "@xstate/react";
+import { myMachine } from "../machine/myFirstMachine";
+
 export default function Home() {
-  return <div>Hello world</div>;
+  const [state, send] = useMachine(myMachine);
+
+  return (
+    <div>
+      {JSON.stringify(state.value)}
+      <button
+        onClick={() => {
+          send("MOUSEOVER");
+        }}
+      >
+        Mouse over
+      </button>
+      <button
+        onClick={() => {
+          send("MOUSEOUT");
+        }}
+      >
+        Mouse out
+      </button>
+    </div>
+  );
 }
