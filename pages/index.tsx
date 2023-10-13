@@ -1,25 +1,38 @@
 import { useMachine } from "@xstate/react";
-import { myMachine } from "../machine/myFirstMachine";
+import { todosMachine } from "../machine/todoAppMachine";
 
 export default function Home() {
-  const [state, send] = useMachine(myMachine);
+  const [state, send] = useMachine(todosMachine, {
+    services: {
+      loadTodos: async () => {
+        throw new Error("failed to load todos");
+        return ["take bins out", "do the washing"];
+      },
+    },
+  });
 
   return (
     <div>
       {JSON.stringify(state.value)}
       <button
         onClick={() => {
-          send("MOUSEOVER");
+          send({
+            type: "TODOS_LOADED",
+            todos: ["take bins out"],
+          });
         }}
       >
-        Mouse over
+        Todos loaded
       </button>
       <button
         onClick={() => {
-          send("MOUSEOUT");
+          send({
+            type: "TODOS_LOADING_FAILED",
+            errorMessage: "failed to load todos",
+          });
         }}
       >
-        Mouse out
+        Todos loading failed
       </button>
     </div>
   );
