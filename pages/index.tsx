@@ -13,27 +13,8 @@ export default function Home() {
 
   return (
     <div>
-      {JSON.stringify(state.value)}
-      <button
-        onClick={() => {
-          send({
-            type: "TODOS_LOADED",
-            todos: ["take bins out"],
-          });
-        }}
-      >
-        Todos loaded
-      </button>
-      <button
-        onClick={() => {
-          send({
-            type: "TODOS_LOADING_FAILED",
-            errorMessage: "failed to load todos",
-          });
-        }}
-      >
-        Todos loading failed
-      </button>
+      <pre>{JSON.stringify(state.value)}</pre>
+      <pre>{JSON.stringify(state.context)}</pre>
     </div>
   );
 }
